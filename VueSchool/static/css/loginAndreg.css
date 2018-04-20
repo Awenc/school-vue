@@ -28,7 +28,7 @@ input.text{
     box-shadow:0 2px 3px 0 rgba(0,0,0,.1) inset;
     text-indent:10px;
 }
-input.btn{		
+input.btn,#button{		
     width:272px;
     height:44px;
     box-shadow:0 15px 30px 0 rgba(0,0,0,.1);
@@ -47,6 +47,7 @@ input::-webkit-input-placeholder{color:#fff}
     background:rgb(13,127,156);
     color:rgb(170,238,255);
     margin-top:5px;
+    line-height:30px;
 }
 #login{
     opacity:1;
@@ -68,6 +69,7 @@ input::-webkit-input-placeholder{color:#fff}
 #back{
     background:rgb(13,127,156);
     color:rgb(170,238,255);
+    line-height: 30px;
 }
 #type{
     display:none;

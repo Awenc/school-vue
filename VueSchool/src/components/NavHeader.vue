@@ -26,11 +26,12 @@
                             <li><a href="#/active">活动信息</a></li>
                             <li><a href="#/">关于网站</a></li>
                         </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#/load"><span class="glyphicon glyphicon-user"></span>登录</a></li>
+                        <user-out v-show="username==''?false:true">{{username}}</user-out>
+                        <ul class="nav navbar-nav navbar-right" v-show="username  !=''?false:true ">
+                            <li><a href="#/load" ><span class="glyphicon glyphicon-user"></span>登录</a></li>
                             <li><a href="#/reg"><span class="glyphicon glyphicon-pencil"></span>注册</a></li>
                         </ul>
-                        <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+                        <!--<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
                             <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Search for...">
                                     <span class="input-group-btn">
@@ -38,8 +39,8 @@
                                             <span class="glyphicon glyphicon-search"></span>
                                         </button>
                                     </span>
-                            </div><!-- /input-group -->
-                        </form>
+                            </div> /input-group
+                        </form> -->
 
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
@@ -47,7 +48,23 @@
     </div>
 </template>
 <script>
+    import UserOut from "@/components/UserOut";
     export default{
-        name:"NacHeader"
+        name:"NacHeader",
+        props:["username"],
+        data(){
+            return{
+                
+            }
+        },
+        components:{
+            UserOut
+        },
+        methods:{
+
+        },
+        mounted(){
+        }
+        
     }
 </script>

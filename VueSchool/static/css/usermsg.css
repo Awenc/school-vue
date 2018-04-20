@@ -35,7 +35,7 @@
 #msg .msg_right .row div{
     border:1px solid white;
     box-shadow: 0 0 10px rgb(130,130,130);
-    height:500px;
+    height:550px;
 }
 #msg .msg_right .row div ul{
     /* border:1px solid black; */

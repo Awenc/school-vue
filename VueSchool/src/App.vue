@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <nav-header></nav-header>
-    <router-view/>
+    <nav-header v-bind:username="username"></nav-header>
+    <router-view v-on:LoadTrue="load"/>
   </div>
 </template>
 
@@ -9,8 +9,33 @@
 import NavHeader from "@/components/NavHeader"
 export default {
   name: 'App',
+  data(){
+    return{
+         username:""
+    }
+   
+    
+  },
   components:{
     NavHeader
+  },
+  methods:{
+    load:function(data){
+      
+      this.username=data;
+      
+    }
+  },
+  mounted(){
+      this.axios.get("/api/NowUsers").then((data) =>{
+          if(data.data.username !=""){          
+              this.username=data.data.username;
+          }else{
+              this.username=""
+          }
+         
+      })
+      //  console.log(this.username);    
   }
 }
 </script>

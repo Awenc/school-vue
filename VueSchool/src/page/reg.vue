@@ -15,7 +15,7 @@
             <span class="errormsg"></span>
         </div>
         <input type="button" class="btn move" id="sure" value="注册">
-        <input type="button" class="btn" id="back" value="返回登录">
+        <a href="#/load" type="button" class="btn" id="back">返回登录</a>
     </div>
   </div>
 </template>

@@ -10,7 +10,24 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {          // 接口转发规则配置，修改了配置，重启服务器生效
+      '/api' : {            // /api 代表接口是以 /api 开头
+
+        // http://hope1995.me:3000/users/login   不是以 /api 开头
+        // /api/users/login    以 /api开头
+        //            自动转发
+        target: 'http://127.0.0.1:3000',    // 自动转发到此地址
+        
+        changeOrigin: true,                   // 自动改变源
+        
+        pathRewrite: {                        // 重写地址
+          '^/api': '/'                        // /api ==> /
+        }
+
+        //   /api/users/login ==> http://hope1995.me:3000/users/login
+        //   /api/goods/list ==> http://hope1995.me:3000/goods/list
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
