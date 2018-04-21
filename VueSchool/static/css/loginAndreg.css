@@ -78,10 +78,11 @@ input::-webkit-input-placeholder{color:#fff}
     position:relative;
     margin-left:5px;
     margin-top:-22px;
-    opacity:0;		
+    /* opacity:0;		 */
+    color:red;	
 }
 .error{
-    opacity:1;	
+    /* opacity:1;	 */
     color:red;				
 }
 .sure{

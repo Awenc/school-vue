@@ -3,10 +3,10 @@
       <div class="changePassword">
           <ul>
               <li class="changeTil">修改密码</li>
-              <li><span>新密码：</span><input type="password" id="newPassword" ></li>
-              <li><span>确认新密码：</span><input type="password" id="SureNewPassword"></li>
+              <li><span>新密码：</span><input type="password" id="newPassword" v-model="newPassword"></li>
+              <li><span>确认新密码：</span><input type="password" id="SureNewPassword" v-model="aginPass"><span id="passError">{{error}}</span></li>
               <li>
-                  <div class="btn btn-default">确定</div>
+                  <div class="btn btn-default" v-on:click="submit">确定</div>
                   <div class="btn btn-default" v-on:click="back">取消</div>
               </li>
           </ul>
@@ -17,10 +17,45 @@
 <script>
     export default{
         name:"changePassword",
-        data(){return{}},
+        data(){return{
+            newPassword:"",
+            aginPass:"",
+            error:"",
+            isTrue:false
+        }},
         methods:{
             back(){
                 this.$emit("noChange")
+            },
+            submit(){
+                if(this.isTrue){
+                    //changedPassword
+                    this.axios.post("/api/userMsg/changedPassword",{
+                        "password":this.newPassword
+                    }).then((data) =>{
+                        if(data.data.isChanged ==1){
+                            alert("修改成功");
+                            this.back();
+                            
+                        }else{
+                            alert("修改失败");
+                            this.back();
+                        }
+                    })
+                }else{
+                    alert("请认真修改密码");
+                }
+            }
+        },
+        watch:{
+            "aginPass":function(newVal,oldVal){
+                if(newVal != this.newPassword){
+                    this.error="密码不一样"
+                    this.isTrue=false;
+                }else{
+                    this.error="";
+                    this.isTrue=true;
+                }
             }
         }
     }
@@ -67,6 +102,8 @@
     .changePassword ul{
         margin-top:40px;
     }
-
+    #passError{
+        position: absolute;
+    }
 </style>
 

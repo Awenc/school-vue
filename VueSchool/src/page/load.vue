@@ -32,7 +32,7 @@
                         this.$emit("LoadTrue",this.username);
                         window.location.href="/#/userMsg";
                     }else{
-                        alert("登录失败")
+                        alert("账号或者密码错误")
                     }
                 })
             }

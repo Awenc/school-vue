@@ -139,12 +139,13 @@ import changePassword from "@/components/changePassword"
 
 
 
-                console.log(data);
+                // console.log(data);
                 if(data.data.isUser == 2){
                     alert("请先登录")
                     window.location.href="/#/load";
                 }else if(data.data.isUser == 0){
                     alert("请填写自己的信息");
+                    this.isChange=true;
                 }else{
                     this.name=data.data.usermsg[0].name;
                     this.age=data.data.usermsg[0].age;
