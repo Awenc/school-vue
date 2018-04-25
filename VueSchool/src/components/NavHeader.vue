@@ -23,7 +23,18 @@
                             <li><a href="#/">首页</a></li>
                             <li><a href="#/usermsg">个人信息</a></li>
                             <li><a href="#/school">校友信息</a></li>
-                            <li><a href="#/active">活动信息</a></li>
+
+
+
+
+                            <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">活动信息 <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#/active">所有活动</a></li>
+                                    <li><a href="#/myActive">我的活动</a></li>
+                                    <li><a href="#/joinActive">参加的活动</a></li>
+                                </ul>
+                            </li>
                             <li><a href="#/">关于网站</a></li>
                         </ul>
                         <user-out v-show="username==''?false:true">{{username}}</user-out>

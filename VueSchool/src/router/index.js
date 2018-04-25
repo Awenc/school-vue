@@ -7,6 +7,11 @@ import school from '@/page/school'
 import active from '@/page/active'
 import load from '@/page/load'
 import reg from '@/page/reg'
+import myActive from '@/page/myActive'
+import joinActive from '@/page/joinActive'
+
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -40,6 +45,16 @@ export default new Router({
       path: '/reg',
       name: 'reg',
       component: reg
+    },
+    {
+      path: '/myActive',
+      name: 'myActive',
+      component: myActive
+    },
+    {
+      path: '/joinActive',
+      name: 'joinActive',
+      component: joinActive
     }
   ]
 })

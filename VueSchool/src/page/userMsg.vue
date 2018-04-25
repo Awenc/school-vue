@@ -1,18 +1,18 @@
 <template>
   <div>
     <div id="msg">   
-        <div class="msg_left fl_l ">
+        <!-- <div class="msg_left fl_l ">
             <ul>
                 <li>个人信息</li>
                 <li>关注的活动</li>
                 <li>我的活动</li>
-                <!-- <li>填写或者修改信息</li> -->
+                <li>填写或者修改信息</li>
                 <li>。。。</li>
             </ul>
-        </div>
+        </div> -->
         <div class="msg_right  container">
             <div class="row">
-                <div class="col-md-6 col-md-offset-2 col-lg-6" v-show="!isChange">
+                <div class="col-md-6 col-md-offset-3  col-lg-6" v-show="!isChange">
                      <h3 class="tit">个人信息</h3>
                      <ul class="selfMsg clearfix" id="">
                          <li>姓名：<input  class="a" type="text" v-model="name" disabled="false"></li>
@@ -37,7 +37,7 @@
                     <a id="changeUserMsg" class="btn btn-danger " v-on:click="change">修改个人信息</a> 
                     <a id="changePassword" class="btn btn-danger " v-on:click="changePassword">修改登录密码</a>
                 </div>
-                <div class="col-md-6 col-md-offset-2 col-lg-6" v-show="isChange">
+                <div class="col-md-6 col-md-offset-3 col-lg-6" v-show="isChange">
                      <h3 class="tit">个人信息</h3>
                      <ul class="selfMsg clearfix" id="">
                          <li>姓名：<input  class="a" type="text" v-model="name" ></li>

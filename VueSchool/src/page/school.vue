@@ -41,13 +41,13 @@
         <table class="table table-bordered">
         <thead>
             <tr>
-            <th></th>
+            <th>序号</th>
             <th>姓名</th>
             <th>年龄</th>
             <th>性别</th>
             <th>专业班级</th>
             <th>职业</th>
-            <th>现居住地</th>
+            <th>居住地</th>
             <th>手机号码</th>
             <th>查看详细信息</th>
             <th></th>
@@ -55,7 +55,7 @@
         </thead>
         <tbody id="usermsg">
             <tr v-for="(good,index) in nowUsersMsg">
-                <td></td>
+                <td>{{index+1}}</td>
                 <td>{{good.name}}</td>
                 <td>{{good.age}}</td>
                 <td>{{good.sex}}</td>
@@ -175,7 +175,7 @@ table thead tr th{
     width:150px;
 }
 #SeeUser{
-    position:absolute;
+    position:fixed;
     top:20%;
     background: rgb(250,250,250);
     width:600px;

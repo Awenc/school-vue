@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="acts">
+      <h3>所有活动信息</h3>
         <table class="table table-hover">
-            <caption>活动信息</caption>
             <thead>
               <tr>
                 <th>活动主题</th>
