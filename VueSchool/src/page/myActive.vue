@@ -19,9 +19,9 @@
                 <td>{{index+1}}</td>
                 <td>{{act.time}}</td>
                 <td>{{act.tit}}</td>
-                <td>{{act.address}}</td>
+                <td>{{act.active_address}}</td>
                 <td>111</td>
-                <th><a class="aboutMore">点击查看</a></th>
+                <th><a class="aboutMore" v-on:click="showMore(index)">点击查看</a></th>
                 <td><a class="del" v-on:click="delActive(act.id)">删除</a><a class="change" v-on:click="changeActive(act.id,index)">修改</a></td>
                 <td></td>
             </tr>
@@ -56,6 +56,46 @@
             <div class="btn btn-success" v-on:click="nochange">取消修改</div>
         </div>
     </div>
+    <div id="activeAllMsg" v-show="isShowNowActive">
+      <h3>活动详情</h3>
+      <ul>
+        <li>活动主题：{{nowActive.tit}}</li>
+        <li>活动内容：{{nowActive.content}}</li>
+        <li>活动时间：{{nowActive.time}}</li>
+        <li>活动地点：{{nowActive.active_address}}</li>
+        <li>发起人：你自己</li>
+        <li>现参与人数：{{joinNum}} <a v-on:click="showJoinUsers(nowActive.id)">查看人员名单</a></li>
+      </ul>
+      <div class="ActBtns">
+        <!-- <a class="btn btn-danger" v-on:click="join(nowActive.id,nowActive.username)">报名参加</a>  -->
+        <a class="btn btn-success" v-on:click="close">关闭</a>        
+      </div>
+
+    </div>
+
+    <div id="JoinAllUsers" v-show="isJoinUser">
+        <h3>人员名单</h3>
+        <div class="mytable">
+        <table class="table">
+            <thead>
+              <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>联系方式</th>              
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(user,index) in allJoinUsers">
+                <td>{{index+1}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.tel}}</td>
+              </tr>
+            </tbody>
+          </table>            
+        </div>
+        <a class="btn btn-success" v-on:click="close_Users">关闭</a>      
+    </div>
+
   </div>
 </template>
 <script>
@@ -70,7 +110,12 @@
                 tit:"",
                 content:"",
                 address:"",
-                nowId:0
+                nowId:0,
+                isShowNowActive:false,
+                nowActive:{},
+                joinNum:0,
+                allJoinUsers:[],
+                isJoinUser:false,
             }
         },
         methods:{
@@ -101,6 +146,44 @@
                         alert("添加失败")
                     }
                 })                
+            },
+            close(){
+                this.isShowNowActive=false;
+            },
+            showMore(i){
+                this.isShowNowActive=true;
+                console.log(this.myAllActive[i]);
+                this.nowActive=this.myAllActive[i];
+                this.joinNum=0;
+                this.axios.post("/api/active/allCount",{
+                    id:this.nowActive.id,
+                }).then((data) =>{
+                // console.log(data.data.num[0]);
+                    if(data.data.isTrue == 0){
+                        this.joinNum=data.data.num[0]["count(active_id)"];
+                    }else{
+                        this.joinNum=0;
+                    }
+                    
+                })
+            },
+            showJoinUsers(i){
+                // 获取参加活动的人员名单
+                this.isJoinUser=true;
+                this.axios.post("/api/active/getAllJoinUsers",{
+                    id:i,
+                }).then((data) =>{
+                // console.log(data.data.num[0]);
+                    if(data.data.isTrue == 0){
+                        this.allJoinUsers=data.data.allUsers;
+                    }else{
+                        this.allJoinUsers=[];
+                    }
+                    
+                })
+            },
+            close_Users(){
+                this.isJoinUser=false;
             },
             isLoad(){
                 this.axios.post("/api/active").then((data) =>{
@@ -140,7 +223,7 @@
                 this.time=this.myAllActive[index].time;
                 this.tit=this.myAllActive[index].tit;
                 this.content=this.myAllActive[index].content;
-                this.address=this.myAllActive[index].address;
+                this.address=this.myAllActive[index].active_address;
                 this.nowId=i;
             },
             sureChange(){
@@ -202,7 +285,7 @@
     top:10%;
     left:50%;
     margin-left:-200px;
-    z-index:9999;
+    z-index:8888;
     border-radius:5px;
 }
 #AddActiveMsg h3,#changeActive h3{
@@ -232,5 +315,53 @@
 .aboutMore{
     display: block;
     text-align: center;
+}
+#activeAllMsg{
+    position:fixed;
+    width:400px;
+    height:360px;
+    background: #222;
+    left:50%;
+    margin-left:-200px;
+    top:20%;
+}
+#activeAllMsg ul li{
+    text-align: left;
+    /* border:1px solid #fff; */
+    font-size:18px;
+    margin-top:12px;
+    color:rgb(140,140,140);
+    padding-left:40px;
+}
+#activeAllMsg ul li a{
+    color:white;
+    margin-left:60px;
+}
+#activeAllMsg .ActBtns{
+    /* width:100%; */
+    margin-top:25px;
+}
+#activeAllMsg .ActBtns a{
+    width:100%;
+}
+#JoinAllUsers{
+    width:400px;
+    height:440px;
+    background: rgb(240,240,240);
+    position:fixed;
+    left:50%;
+    margin-left:-200px;
+    top:20%;
+}
+#JoinAllUsers .mytable{
+    width:350px;
+    height:300px;
+    margin:0px auto;
+    background: white;
+    overflow: auto;
+}
+#JoinAllUsers a{
+    width:100%;
+    margin-top:15px;
 }
 </style>

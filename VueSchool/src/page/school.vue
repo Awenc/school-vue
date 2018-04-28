@@ -1,6 +1,7 @@
 <template>
   <div>
  <div id="school_msg">
+        <h3>校友信息</h3>
         <div class="form-inline myform">
            
             <div class="form-group">
