@@ -132,20 +132,38 @@
             },
             addAct(){
                 // console.log("aaaa");
-                this.axios.post("/api/active/addActive",{
-                    time:this.time,
-                    tit:this.tit,
-                    content:this.content,
-                    address:this.address,
-                }).then((data) =>{
-                    if(data.data.isAdd == 0){
-                        alert("添加成功")
-                        this.isAddActive=false;
-                        this.isLoad();
-                    }else{
-                        alert("添加失败")
-                    }
-                })                
+                //判断日期
+                var tempDate= this.dateChange(this.time);              
+                var actDate=new Date(tempDate);
+                var curDate=new Date();
+                // console.log(actDate+"..."+curDate);
+                // console.log(Date.parse(actDate)+".."+Date.parse(curDate));
+                // console.log(typeof(Date.parse(actDate)));
+                if(actDate<curDate){
+                    alert("该日期已过");
+                }else{
+                    this.axios.post("/api/active/addActive",{
+                        time:this.time,
+                        tit:this.tit,
+                        content:this.content,
+                        address:this.address,
+                    }).then((data) =>{
+                        if(data.data.isAdd == 0){
+                            alert("添加成功")
+                            this.isAddActive=false;
+                            this.isLoad();
+                        }else{
+                            alert("添加失败")
+                        }
+                    })                  
+                }
+               
+            },
+            dateChange(str){
+                var year=str.substring(0,4);
+                var moth=str.substring(4,6);
+                var day=str.substring(6);
+               return(year+"/"+moth+"/"+day);
             },
             close(){
                 this.isShowNowActive=false;

@@ -9,6 +9,7 @@
                         <th>时间</th>
                         <th>主题</th>
                         <th>地点</th>
+                        <th>状态</th>
                         <th>详细情况</th>
 
                         <th></th>
@@ -20,13 +21,14 @@
                         <td>{{act.time}}</td>
                         <td>{{act.tit}}</td>
                         <td>{{act.active_address}}</td>
+                        <td>{{act.style}}</td>
                         <th><a class="aboutMore" v-on:click="showAllAct(index)">点击查看</a></th>
                         <td></td>
                     </tr>
                 </tbody>
             </table>
       </div>
-      <div class="changedAct">
+      <!-- <div class="changedAct">
           <h3>做出修改的活动</h3>
             <table class="table table-bordered">
                 <thead>
@@ -50,8 +52,8 @@
                     </tr>
                 </tbody>
             </table>
-      </div>
-      <div class="delAct">
+      </div> -->
+      <!-- <div class="delAct">
           <h3>已经取消的活动</h3>
             <table class="table table-bordered">
                 <thead>
@@ -73,7 +75,7 @@
                     </tr>
                 </tbody>
             </table>
-      </div>
+      </div> -->
         <div id="activeAllMsg" v-show="isShowNowActive">
         <h3>活动详情</h3>
         <ul>
@@ -118,12 +120,42 @@
                         window.location.href="/#/load";
                     }else if(data.data.isJoinActive == 1){
                         this.allJoinActive=data.data.allJoinActive
+                        for(var i=0;i<this.allJoinActive.length;i++){
+                            //先判断时间是否过期
+                            var tempDate= this.dateChange(this.allJoinActive[i].time);              
+                            var actDate=new Date(tempDate);
+                            var curDate=new Date();
+                            if(actDate<curDate){
+                                this.allJoinActive[i].style="已过期";
+                            }else{
+                                if(this.allJoinActive[i].ischange == '1'){
+                                    this.allJoinActive[i].style="已修改";
+                                    if(this.allJoinActive[i].isdel == '1'){
+                                        this.allJoinActive[i].style="已删除";
+                                    }
+                                }else if(this.allJoinActive[i].isdel == '1'){
+                                    this.allJoinActive[i].style="已删除";
+                                }else{
+                                    this.allJoinActive[i].style="进行中";
+                                }                                
+                            }
+
+
+                        }
+
+
                         //将其中的做出修改的活动分类出来
                         this.isChanged();
                         //将其中已经删除了的活动分类出来
                         this.isdel();
                     }
                 })                 
+            },
+            dateChange(str){
+                var year=str.substring(0,4);
+                var moth=str.substring(4,6);
+                var day=str.substring(6);
+               return(year+"/"+moth+"/"+day);
             },
             isChanged(){
                 this.changedJoinActive=[];//清空数组

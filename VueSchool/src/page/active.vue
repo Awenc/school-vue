@@ -55,13 +55,29 @@
         mounted(){
           //获取到所有的活动信息
           this.axios.get("/api/active/allActive").then((data) =>{
-              console.log(data);
+              // console.log(data);
               if(data.data.isOk == 1){
-                this.actives=data.data.activeMsg;
+                //对所有活动进行时间的判断
+                var tempDate="";              
+                var actDate="";
+                var curDate=new Date();    
+                for(var i=0;i<data.data.activeMsg.length;i++){
+                  tempDate= this.dateChange(data.data.activeMsg[i].time);              
+                  actDate=new Date(tempDate);
+                  if(actDate>curDate){
+                     this.actives.push(data.data.activeMsg[i]);
+                  }
+                }
               }
           })            
         },
         methods:{
+          dateChange(str){
+                var year=str.substring(0,4);
+                var moth=str.substring(4,6);
+                var day=str.substring(6);
+               return(year+"/"+moth+"/"+day);
+          },
           showAct(i){
             // alert("qqqq");
             this.isShowNowActive=true;
