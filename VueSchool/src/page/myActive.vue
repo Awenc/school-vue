@@ -20,7 +20,7 @@
                 <td>{{act.time}}</td>
                 <td>{{act.tit}}</td>
                 <td>{{act.active_address}}</td>
-                <td>111</td>
+                <td>{{act.style}}</td>
                 <th><a class="aboutMore" v-on:click="showMore(index)">点击查看</a></th>
                 <td><a class="del" v-on:click="delActive(act.id)">删除</a><a class="change" v-on:click="changeActive(act.id,index)">修改</a></td>
                 <td></td>
@@ -211,6 +211,26 @@
                     }else{
                         // console.log(data);
                         this.myAllActive=data.data.allActive;
+                        for(var i=0;i<this.myAllActive.length;i++){
+                            //先判断时间是否过期
+                            var tempDate= this.dateChange(this.myAllActive[i].time);              
+                            var actDate=new Date(tempDate);
+                            var curDate=new Date();
+                            if(actDate<curDate){
+                                this.myAllActive[i].style="已过期";
+                            }else{
+                                if(this.myAllActive[i].ischange == '1'){
+                                    this.myAllActive[i].style="已修改";
+                                    if(this.myAllActive[i].isdel == '1'){
+                                        this.myAllActive[i].style="已删除";
+                                    }
+                                }else if(this.myAllActive[i].isdel == '1'){
+                                    this.myAllActive[i].style="已删除";
+                                }else{
+                                    this.myAllActive[i].style="进行中";
+                                }                                
+                            }
+                        }
                     }
                 })                 
             },
